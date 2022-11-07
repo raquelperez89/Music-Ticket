@@ -11,6 +11,7 @@ headers={
     'Accept':'*/*'
 }
 
+
 def create_ticket(ticket: dict):
     try:
         data = ticket["person"]
