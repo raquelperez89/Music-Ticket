@@ -14,10 +14,9 @@ headers={
 def create_ticket(ticket: dict):
     try:
         data = ticket["person"]
-        person_response = requests.post(url = PERSON_ENDPOINT, data = data, headers=headers)
+        person_response = requests.post(url = PERSON_ENDPOINT, json= data, headers=headers)
         print(ticket["person"])
         #print(r.status_code)
-        # ticket["person.name"] = "nothing"
         if person_response.status_code == 200:
             table.put_item(Item=ticket)
             return ticket
