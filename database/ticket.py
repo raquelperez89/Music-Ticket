@@ -1,4 +1,5 @@
 import requests
+from fastapi import HTTPException
 from .db import dynamodb
 from botocore.exceptions import ClientError
 from fastapi.responses import JSONResponse
@@ -16,7 +17,7 @@ def create_ticket(ticket: dict):
     try:
         data = ticket["person"]
         person_response = requests.post(url = PERSON_ENDPOINT, json= data, headers=headers)
-        print(ticket["person"])
+        #print(ticket["person"])
         #print(r.status_code)
         if person_response.status_code == 200:
             table.put_item(Item=ticket)
@@ -32,7 +33,10 @@ def get_ticket(id: str):
         response = table.query(
             KeyConditionExpression=Key("id").eq(id)
         )
-        return response["Items"]
+        if response["Count"] > 1:
+            return response["Items"]
+        else:
+            raise HTTPException(status_code=404, detail="Item not found")
     except ClientError as e:
         return JSONResponse(content=e.response["Error"], status_code=500)
 
@@ -41,7 +45,7 @@ def get_tickets():
     try:
         response = table.scan(
             Limit=5,
-            AttributesToGet=["id", "concert", "sector", "person", "date", "quantity"]
+            AttributesToGet=["id", "concert", "sector", "person", "date", "quantity", "created_at"]
         )
         return response["Items"]
     except ClientError as e:
@@ -56,6 +60,7 @@ def delete_ticket(ticket: dict):
                 "created_at": ticket["created_at"]
             }
         )
+        print(response)
         return response
     except ClientError as e:
         return JSONResponse(content=e.response["Error"], status_code=500)

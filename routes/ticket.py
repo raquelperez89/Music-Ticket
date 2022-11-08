@@ -6,7 +6,7 @@ from database.ticket import create_ticket, get_ticket, get_tickets, delete_ticke
 route_ticket = APIRouter()
 
 
-@route_ticket.post("/create", response_model=Ticket)
+@route_ticket.post("/create", response_model=Ticket, status_code=201)
 def create(ticket: Ticket):
     return create_ticket(ticket.dict())
 
@@ -24,12 +24,12 @@ def get_all():
 
 
 
-@route_ticket.post("/delete")
-def create(ticket: Ticket):
+@route_ticket.delete("/delete")
+def delete(ticket: Ticket):
     return delete_ticket(ticket.dict())
 
 
 
 @route_ticket.put("/update")
-def create(ticket: Ticket):
+def update(ticket: Ticket):
     return update_ticket(ticket.dict())
