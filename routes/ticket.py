@@ -24,9 +24,9 @@ def get_all():
 
 
 
-@route_ticket.delete("/delete")
-def delete(ticket: Ticket):
-    return delete_ticket(ticket.dict())
+@route_ticket.delete("/delete/{id}/{created_at}")
+def delete(id: str, created_at: str):
+    return delete_ticket(id, created_at)
 
 
 
