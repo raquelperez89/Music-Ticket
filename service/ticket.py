@@ -1,6 +1,6 @@
 import requests
 from fastapi import HTTPException
-from .db import dynamodb
+from database.db import dynamodb
 from botocore.exceptions import ClientError
 from fastapi.responses import JSONResponse
 from boto3.dynamodb.conditions import Key
@@ -17,7 +17,7 @@ def create_ticket(ticket: dict):
     try:
         data = ticket["person"]
         person_response = requests.post(url = PERSON_ENDPOINT, json= data, headers=headers)
-        print("person sortId: " , person_response.json()["sortId"])
+        #print("person sortId: " , person_response.json()["sortId"])
         if person_response.status_code == 200:
             table.put_item(Item=ticket)
             return ticket

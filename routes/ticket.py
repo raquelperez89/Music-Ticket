@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from models.ticket import Ticket
-from database.ticket import create_ticket, get_ticket, get_tickets, delete_ticket, update_ticket
+from service.ticket import create_ticket, get_ticket, get_tickets, delete_ticket, update_ticket
 
 
 route_ticket = APIRouter()
