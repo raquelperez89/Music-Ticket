@@ -1,35 +1,39 @@
 from fastapi import APIRouter
 from models.ticket import Ticket
-from service.ticket import create_ticket, get_ticket, get_tickets, delete_ticket, update_ticket
+from controller.ticketCotroller import TicketController
+from service.ticketService import TicketService
+from repository.ticketRepository import TicketRepository
 
 
 route_ticket = APIRouter()
-
+ticketRepository = TicketRepository()
+ticketService = TicketService(ticketRepository)
+ticketController = TicketController(ticketService)
 
 @route_ticket.post("/create", response_model=Ticket, status_code=201)
 def create(ticket: Ticket):
-    return create_ticket(ticket.dict())
+    return ticketController.create_ticket(ticket.dict())
 
 
 
 @route_ticket.get("/get/{id}")
 def get_by_id(id: str):
-    return get_ticket(id)
+    return ticketController.get_ticket(id)
 
 
 
 @route_ticket.get("/all")
-def get_all():
-    return get_tickets()
+async def get_all():
+    return ticketController.get_tickets()
 
 
 
 @route_ticket.delete("/delete/{id}/{created_at}")
 def delete(id: str, created_at: str):
-    return delete_ticket(id, created_at)
+    return ticketController.delete_ticket(id, created_at)
 
 
 
-@route_ticket.put("/update")
-def update(ticket: Ticket):
-    return update_ticket(ticket.dict())
+@route_ticket.put("/update/{id}")
+def update(id:str, ticket: Ticket):
+    return ticketController.update_ticket(id, ticket.dict())
