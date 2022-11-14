@@ -1,11 +1,12 @@
 from database.db import dynamodb
 from boto3.dynamodb.conditions import Key
 
+from repository.repository import Repository
+
 table = dynamodb.Table("tickets")
 
 
-class TicketRepository():
-
+class TicketRepository(Repository):
 
     def create(self, ticket: dict):
         table.put_item(Item=ticket)

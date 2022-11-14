@@ -1,11 +1,12 @@
 from fastapi import APIRouter
 from models.ticket import Ticket
-from controller.ticketCotroller import TicketController
+from controller.ticketController import TicketController
 from service.ticketService import TicketService
 from repository.ticketRepository import TicketRepository
 
 
 route_ticket = APIRouter()
+
 ticketRepository = TicketRepository()
 ticketService = TicketService(ticketRepository)
 ticketController = TicketController(ticketService)

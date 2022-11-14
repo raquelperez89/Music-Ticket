@@ -1,7 +1,9 @@
 import requests
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
+from repository.repository import Repository
 from repository.ticketRepository import TicketRepository
+from service.Service import Service
 
 PERSON_ENDPOINT = "https://ad-band-service.herokuapp.com/api/Person"
 headers={
@@ -9,10 +11,10 @@ headers={
     'Accept':'*/*'
 }
 
-class TicketService:
+class TicketService(Service):
 
 
-    def __init__(self, repository: TicketRepository):
+    def __init__(self, repository: Repository):
         self.repository = repository
 
     def create_ticket(self, ticket: dict):

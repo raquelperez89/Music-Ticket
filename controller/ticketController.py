@@ -1,10 +1,10 @@
 from botocore.exceptions import ClientError
 from fastapi.responses import JSONResponse
-from service.ticketService import TicketService
+from service.Service import Service
 
 class TicketController:
 
-    def __init__(self, service: TicketService):
+    def __init__(self, service: Service):
         self.service = service
     
 
