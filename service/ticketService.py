@@ -5,7 +5,7 @@ from repository.repository import Repository
 from repository.ticketRepository import TicketRepository
 from service.Service import Service
 
-PERSON_ENDPOINT = "https://ad-band-service.herokuapp.com/api/Person"
+PERSON_ENDPOINT = "https://ad-band-service.herokuapp.com/api/persons"
 headers={
     'Content-type':'application/json', 
     'Accept':'*/*'
